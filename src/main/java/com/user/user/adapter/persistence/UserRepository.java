@@ -1,6 +1,7 @@
 package com.user.user.adapter.persistence;
 
 import com.user.user.domain.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   List<User> findByName(String name);
 
+  void removeByUserId(Long userId);
+
+  @Transactional
+  void deleteByUserId(Long userId);
 }

@@ -1,18 +1,18 @@
 package com.user.user.domain;
 
+import com.user.user.adapter.web.model.UserRequestDto;
 import com.user.user.adapter.web.model.UserResponseDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "USERS", schema = "USR")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @Column(name = "USER_ID", nullable = false)
@@ -49,16 +49,21 @@ public class User {
         this.createdBy = createdBy;
         this.modifiedBy = modifiedBy;
     }
+
+    public static User from(UserRequestDto userRequestDto){
+      return User.builder()
+              .userId(userRequestDto.getUserId())
+              .name(userRequestDto.getName())
+              .email(userRequestDto.getEmail())
+              .password(userRequestDto.getPassword())
+              .createdBy(userRequestDto.getCreatedBy())
+              .modifiedBy(userRequestDto.getModifiedBy())
+              .build();
+    }
+
     //toUserResponseDto method
     public UserResponseDto toUserResponseDto() {
         return new UserResponseDto(userId, name, email, password, registrationDate, modificationDate, createdBy, modifiedBy);
     }
-
-    //of method
-    public static User of(Long userId, String name, String email, String password, Long createdBy, Long modifiedBy) {
-        return new User(userId, name, email, password, createdBy, modifiedBy);
-    }
-
-
 
 }

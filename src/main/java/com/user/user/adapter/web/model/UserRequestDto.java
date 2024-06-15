@@ -1,28 +1,29 @@
 package com.user.user.adapter.web.model;
 
 import com.user.user.domain.User;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * DTO for {@link User}
  */
-@Value
 @Getter
-@ToString
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
+@NoArgsConstructor
 public class UserRequestDto implements Serializable {
+    @NotNull
     Long userId;
-    String name;
-    String email;
-    String password;
-    Long createdBy;
-    Long modifiedBy;
 
-    public User toEntity() {
-        return new User(userId, name, email, password, createdBy, modifiedBy);
-    };
+    String name;
+
+    String email;
+
+    String password;
+
+    Long createdBy;
+
+    Long modifiedBy;
 
 }
